@@ -1,0 +1,12 @@
+﻿venv/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.local
+node_modules/
+dist/
+.angular/
+*.log
+.DS_Store
+Thumbs.db

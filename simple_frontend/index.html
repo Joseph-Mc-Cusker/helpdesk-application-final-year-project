@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Helpdesk – Simple Frontend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+  <header class="header">
+    <h1>Helpdesk</h1>
+    <div id="user-info" class="user-info hidden">
+      <span id="user-name"></span>
+      <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-layout">
+    <!-- Login panel -->
+    <div class="container">
+    <section id="login-section" class="card">
+      <h2>Login</h2>
+      <div id="login-error" class="alert alert-error hidden"></div>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </section>
+    </div>
+
+    <!-- Main app panel: sidebar + content (hidden until login) -->
+    <section id="app-section" class="hidden" style="display: none;">
+      <!-- Left sidebar: always visible when logged in; User Management only for admin -->
+      <aside id="sidebar" class="sidebar">
+        <nav class="sidebar-nav">
+          <button type="button" id="nav-tickets" class="sidebar-btn active">Tickets</button>
+          <button type="button" id="nav-users" class="sidebar-btn sidebar-admin-only hidden">User Management</button>
+        </nav>
+      </aside>
+      <div class="main-content">
+      <!-- In-app notifications (e.g. "Your ticket has been resolved") -->
+      <div id="notifications-panel" class="notifications-panel hidden">
+        <div class="notifications-header">
+          <h3>Notifications</h3>
+          <button type="button" id="notifications-dismiss-all" class="btn btn-secondary btn-sm">Dismiss all</button>
+        </div>
+        <ul id="notifications-list"></ul>
+      </div>
+      <!-- Tickets View -->
+      <div id="tickets-view">
+        <div class="grid">
+          <div class="card">
+            <h2>Create Ticket</h2>
+          <div id="create-error" class="alert alert-error hidden"></div>
+          <div id="create-success" class="alert alert-success hidden"></div>
+          <form id="ticket-form">
+            <div class="form-group">
+              <label for="ticket-title">Title</label>
+              <input id="ticket-title" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="ticket-category">Category</label>
+              <select id="ticket-category" required>
+                <option value="">Select category</option>
+                <option value="hardware">Hardware</option>
+                <option value="software">Software</option>
+                <option value="network">Network</option>
+                <option value="email">Email</option>
+                <option value="account">Account</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ticket-priority">Priority</label>
+              <select id="ticket-priority" required>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ticket-description">Description</label>
+              <textarea id="ticket-description" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Ticket</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>My Tickets</h2>
+          <div class="form-inline">
+            <label for="status-filter">Status:</label>
+            <select id="status-filter">
+              <option value="">All</option>
+              <option value="open">Open</option>
+              <option value="in_progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+            </select>
+            <button id="refresh-btn" class="btn btn-secondary btn-sm">Refresh</button>
+          </div>
+          <table class="table" id="tickets-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tickets-body">
+              <tr>
+                <td colspan="7" class="empty">No tickets yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+      <!-- Admin User Management View -->
+      <div id="users-view" class="hidden">
+        <div class="card">
+          <h2>User Management</h2>
+          <div id="users-error" class="alert alert-error hidden"></div>
+          <button id="refresh-users-btn" class="btn btn-secondary btn-sm" style="margin-bottom: 10px;">Refresh Users</button>
+          <table class="table" id="users-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Role</th>
+                <th>Active</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-body">
+              <tr>
+                <td colspan="7" class="empty">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+      <!-- end main-content -->
+    </section>
+  </main>
+
+  <script src="app.js?v=3"></script>
+</body>
+</html>
+
